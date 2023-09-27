@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+        <canvas id="canvas"></canvas>
+        <div class="panel">
+            <button id="undo">undo</button>
+            <button id="redo">redo</button>
+            <button id="clear">Clear</button>
+            <label for="color">Choose a color:</label>
+            <select name="color" id="color">
+                <option value="black" selected>black</option>
+                <option value="brown" selected>brown</option>
+                <option value="red" selected>red</option>
+            </select>
+            <label for="select-width">Select width:</label>
+            <input type="range" id="width" min="1" max="25" value="2">
+
+        </div>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
