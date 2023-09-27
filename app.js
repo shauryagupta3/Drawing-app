@@ -16,7 +16,7 @@ let draw_width = widthSelect.value;
 canvas.addEventListener("mousedown", handleMousedown);
 canvas.addEventListener("mousemove", handleMousemove);
 canvas.addEventListener("mouseup", handleMouseUp);
-colorSelect.addEventListener("change", (e) => {d
+colorSelect.addEventListener("change", (e) => {
   draw_color = colorSelect.value;
 });
 
@@ -58,6 +58,8 @@ function handleMouseUp(event) {
 
   undo_arr.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
   index++;
+  redo_arr = [];
+  redo_index = -1;
 }
 
 document.getElementById("clear").addEventListener("click", (e) => {
@@ -65,6 +67,8 @@ document.getElementById("clear").addEventListener("click", (e) => {
 
   undo_arr = [];
   index = -1;
+  redo_arr = [];
+  redo_index = -1;
 });
 
 document.getElementById("undo").addEventListener("click", (e) => {
@@ -72,16 +76,18 @@ document.getElementById("undo").addEventListener("click", (e) => {
     document.getElementById("clear").click();
   } else {
     index--;
-    redo_arr.push(undo_arr[index]);
     redo_index++;
+    redo_arr.push(undo_arr[index+1]);
     undo_arr.pop();
     ctx.putImageData(undo_arr[index], 0, 0);
   }
 });
 
 document.getElementById("redo").addEventListener("click", (e) => {
-  ctx.putImageData(redo_arr[redo_index], 0, 0);
-  redo_index--;
-  undo_arr.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
-  index++;
+  if (redo_index > -1) {
+    ctx.putImageData(redo_arr[redo_index], 0, 0);
+    redo_index--;
+    undo_arr.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+    index++;
+  }
 });
